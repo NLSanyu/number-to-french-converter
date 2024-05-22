@@ -1,5 +1,5 @@
 """
-Convert numbers to French
+A script to convert numbers from digits to their written version in French
 """
 
 CONSTANTS = {
@@ -13,6 +13,7 @@ CONSTANTS = {
     100: "cent", 1000: "mille"
 }
 
+
 def convert_0_to_99(number):
     """Convert numbers from 0 to 99"""
 
@@ -25,9 +26,9 @@ def convert_0_to_99(number):
         else:
             number_in_french = f"{CONSTANTS[number - remainder]}-{CONSTANTS[remainder]}"
     else:
-        if (number > 70) and (number < 80):
+        if 70 < number < 80:
             number_in_french = f"{CONSTANTS[60]}-{CONSTANTS[number - 60]}"
-        elif (number > 80) and (number < 100):
+        elif 80 < number < 100:
             number_in_french = f"{CONSTANTS[80][:-1]}-{CONSTANTS[number - 80]}"
 
     return number_in_french
@@ -37,7 +38,7 @@ def convert_100_to_999(number):
     """Convert numbers from 100 to 999"""
 
     floor = number // 100
-    if floor == 1:
+    if floor <= 1:
         return f"{CONSTANTS[100]} {convert_0_to_99(number % 100)}"
     return f"{CONSTANTS[floor]} {CONSTANTS[100]} {convert_0_to_99(number % 100)}"
 
@@ -46,7 +47,7 @@ def convert_1000_upwards(number):
     """Convert numbers from 1000 going upwards"""
 
     floor = number // 1000
-    if floor == 1:
+    if floor <= 1:
         return f"{CONSTANTS[1000]} {convert_100_to_999(number % 100)}"
     return f"{CONSTANTS[floor]} {CONSTANTS[1000]} {convert_1000_upwards(number % 1000)}"
 
@@ -64,6 +65,16 @@ def convert_number_to_french(number):
         return convert_0_to_99(number)
 
 
-if __name__=="__main__":
-    n = 197
-    print(convert_number_to_french(n))
+if __name__ == "__main__":
+    input_list = [
+        0, 1, 5, 10, 11, 15, 20, 21, 30, 35, 50, 51, 68, 70, 75, 99, 100, 101, 105,
+        111, 123, 168, 171, 175, 199, 200, 201, 555, 999, 1000, 1001, 1111, 1199, 1234
+    ]
+
+    #  1999, 2000, 2001, 2020, 2021, 2345, 9999, 10000, 11111, 12345, 123456, 654321, 999999]
+
+    # using a reduced version of the list for testing purposes
+    # (TO DO: fix recursion error when testing with larger numbers)
+
+    converted_numbers = list(map(convert_number_to_french, input_list))
+    print(converted_numbers)
