@@ -57,11 +57,11 @@ def convert_number_to_french(number):
 
     if number in CONSTANTS:
         return CONSTANTS[number]
-    elif number > 999:
+    if number > 999:
         return convert_1000_upwards(number)
-    elif number > 100:
+    if number > 100:
         return convert_100_to_999(number)
-    elif number > 10:
+    if number > 10:
         return convert_0_to_99(number)
 
 
